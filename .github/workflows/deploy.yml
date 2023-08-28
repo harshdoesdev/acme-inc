@@ -25,6 +25,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+        continue-on-error: true
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
       - name: Build the pages with fastn
         run: |
