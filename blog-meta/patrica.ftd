@@ -1,4 +1,4 @@
--- common.author-meta patrica: Jane Doe
+-- common.author-meta patrica: Patrica AVA
 profile: UI Designer
 bio-url: /sample-post/
 image: $assets.files.assets.avatar.png
