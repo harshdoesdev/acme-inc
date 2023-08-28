@@ -13,6 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: FranzDiebold/github-env-vars-action@v2
+      - name: Check and Restore Cache for fastn.com Directory
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Library/Caches/fastn.com
+          key: fastn-com-${{ hashFiles('path/to/dependency/file') }}
+          restore-keys: |
+            fastn-com-
+      - name: Download Previous .build Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
       - run: sh -c "$(curl -fsSL https://fastn.com/install.sh)"
       - name: Build the pages with fastn
         run: |
@@ -28,3 +40,16 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./.build
+      - name: Cache .build Directory
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact
+          path: .build
+      - name: Save fastn.com to Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            /Library/Caches/fastn.com
+          key: fastn-com-${{ hashFiles('path/to/dependency/file') }}
+          restore-keys: |
+            fastn-com-
